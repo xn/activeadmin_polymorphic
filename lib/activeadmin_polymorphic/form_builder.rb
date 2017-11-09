@@ -22,7 +22,7 @@ module ActiveadminPolymorphic
      attr_reader :options
      attr_reader :heading, :sortable_column, :sortable_start
      attr_reader :new_record, :destroy_option
-     attr_reader :poly_name, :types, :path_prefix
+     attr_reader :poly_name, :types, :path_prefix, :type_paths
 
     def initialize(has_many_form, assoc, poly_name, options)
       super has_many_form
@@ -55,6 +55,7 @@ module ActiveadminPolymorphic
       @destroy_option = options.delete(:allow_destroy)
       @types = options.delete(:types)
       @path_prefix = options.delete(:path_prefix) || :admin
+      @type_paths  = options.delete(:type_paths) || {}
       options
     end
 
@@ -184,11 +185,11 @@ module ActiveadminPolymorphic
     end
 
     def form_new_path(object)
-      "/#{path_prefix}/#{ActiveModel::Naming.plural(object)}/new"
+      "/#{path_prefix}/#{type_paths.fetch(object, ActiveModel::Naming.plural(object) + '/new')}"
     end
 
     def form_edit_path(object)
-      "/#{path_prefix}/#{ActiveModel::Naming.plural(object)}/#{object.id}/edit"
+       "/#{path_prefix}/#{type_paths.fetch(object, ActiveModel::Naming.plural(object) + '/edit')}"
     end
   end
 end
