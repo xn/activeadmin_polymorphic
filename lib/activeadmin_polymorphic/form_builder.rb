@@ -185,11 +185,11 @@ module ActiveadminPolymorphic
     end
 
     def form_new_path(object)
-      "/#{path_prefix}/#{type_paths.fetch(object, ActiveModel::Naming.plural(object) + '/new')}"
+      "/#{path_prefix}/#{type_paths.fetch(object, ActiveModel::Naming.plural(object))}/new"
     end
 
     def form_edit_path(object)
-       "/#{path_prefix}/#{type_paths.fetch(object, ActiveModel::Naming.plural(object) + '/edit')}"
+       "/#{path_prefix}/#{type_paths.fetch(object, ActiveModel::Naming.plural(object))}/#{object.id}/edit"
     end
   end
 end
