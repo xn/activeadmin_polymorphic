@@ -41,7 +41,9 @@ module ActiveadminPolymorphic
       html = "".html_safe
       html << template.content_tag(:h3) { heading } if heading.present?
       html << template.capture { content_polymorphic_has_many(&block) }
-      wrap_div_or_li(html)
+      html = wrap_div_or_li(html)
+      template.concat(html) if template.output_buffer
+      html
     end
 
     protected
