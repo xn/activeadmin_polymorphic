@@ -1,15 +1,3 @@
-# Provides an intuitive way to build has_many associated records in the same form.
-module Formtastic
-  module Inputs
-    module Base
-      def input_wrapping(&block)
-        html = super
-        template.concat(html) if template.output_buffer && template.assigns[:polymorphic_has_many_block]
-        html
-      end
-    end
-  end
-end
 module ActiveadminPolymorphic
   class FormBuilder < ::ActiveAdmin::FormBuilder
     def polymorphic_has_many(assoc, poly_name, options = {}, &block)
@@ -75,7 +63,7 @@ module ActiveadminPolymorphic
         render_polymorphic_has_many_form(form_builder, options[:parent], &block)
       end
 
-      template.assigns[:polymorphic_has_many_block] = true
+      template.assigns[:has_many_block] = true
       contents = without_wrapper { inputs(options, &form_block) }
       contents ||= "".html_safe
 
