@@ -150,7 +150,7 @@ window.extractAndInsertForm = (url, target) ->
       target.prepend form
 
       container.trigger "polymorphic_has_many_form:inserted", [form]
-      $(target).find('.has_many_container').trigger('has_many_add:after')
+      $(target).find('.has_many_container').trigger('has_many_add:after', [form])
     error: (xhr, status, error) ->
       stop_loading_indicator(target, spinner)
 
@@ -170,7 +170,7 @@ window.loadErrors = (target) ->
     $(target).find('fieldset').replaceWith(fieldset)
     container = $(target).closest '.polymorphic_has_many_container'
     container.trigger "polymorphic_has_many_form:inserted", [ target ]
-    $(target).find('.has_many_container').trigger('has_many_add:after')
+    $(target).find('.has_many_container').trigger('has_many_add:after', [form])
 
 window.remoteSubmit = (target, parentForm, callback) ->
   action = $(target).attr('action')
